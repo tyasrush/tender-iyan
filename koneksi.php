@@ -1,4 +1,7 @@
 <?php
+/*
+file koneksi untuk handle koneksi ke database
+*/
 
 // $user = "u940947760_ian";
 // $db = "u940947760_tndr";
