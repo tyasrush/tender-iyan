@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -21,7 +21,6 @@ if ($result) {
         $resultArray['email'] = $row['email'];
         $resultArray['contact'] = $row['contact'];
         $resultArray['alamat'] = $row['alamat'];
-        $resultArray[] = $resultItem;
     }
 
     $resultArray['status'] = "success";
@@ -30,4 +29,3 @@ if ($result) {
 }
 
 echo json_encode($resultArray);
-
