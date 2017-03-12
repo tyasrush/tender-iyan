@@ -4,9 +4,9 @@ include './koneksi.php';
 
 $target_path = 'images/request/';
 $response = array();
-// $file_upload_url = "http://" . $_SERVER['SERVER_ADDR'] . '/tender/' . $target_path;
+$file_upload_url = "http://" . $_SERVER['SERVER_ADDR'] . '/tender/' . $target_path;
 // $file_upload_url = "http://" . $_SERVER['SERVER_ADDR'] . $target_path;
-$file_upload_url = 'http://tender-server.esy.es/' . $target_path;
+// $file_upload_url = 'http://tender-server.esy.es/' . $target_path;
 
 if (file_exists($target_path)) {
     if (isset($_FILES['image']['name'])) {
