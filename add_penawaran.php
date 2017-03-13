@@ -5,8 +5,8 @@ include './koneksi.php';
 $target_path = 'images/penawaran/';
 $response = array();
 // $file_upload_url = "http://" . $_SERVER['SERVER_ADDR'] . '/tender/' . $target_path;
-$file_upload_url = "http://" . $_SERVER['SERVER_ADDR'] . '/server_tender/' . $target_path;
-// $file_upload_url = 'http://tender-server.esy.es/' . $target_path;
+// $file_upload_url = "http://" . $_SERVER['SERVER_ADDR'] . '/server_tender/' . $target_path;
+$file_upload_url = 'http://tender-server.esy.es/' . $target_path;
 // $file_upload_url = "http://" . $_SERVER['SERVER_ADDR'] . $target_path;
 
 if (file_exists($target_path)) {

@@ -4,16 +4,16 @@ file koneksi untuk handle koneksi ke database
 */
 
 //untuk koneksi server idhostinger
-// $user = "u940947760_ian";
-// $db = "u940947760_tndr";
-// $host = "mysql.idhostinger.com";
-// $pass = "kuKojHQoYa3g";
+$user = "u940947760_ian";
+$db = "u940947760_tndr";
+$host = "mysql.idhostinger.com";
+$pass = "kuKojHQoYa3g";
 
 //untuk koneksi server local
-$user = "root";
-$db = "tender";
-$host = "localhost";
-$pass = "";
+// $user = "root";
+// $db = "tender";
+// $host = "localhost";
+// $pass = "";
 $conn = mysqli_connect($host, $user, $pass, $db);
 if (mysqli_connect_errno()) {
     echo mysqli_connect_error();
