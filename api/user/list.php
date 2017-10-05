@@ -1,19 +1,21 @@
 <?php
 
-include './koneksi.php';
+include '../koneksi.php';
 
 $resultArray = array();
+$resultArray['data'][] = "";
 
 if (isset($_POST['alphabet'])) {
-  $list = "SELECT * FROM request ORDER BY nama ASC";
+  $query = "SELECT * FROM request ORDER BY nama ASC";
 } else if (isset($_POST['termurah'])) {
-  $list = "SELECT * FROM request ORDER BY anggaran ASC";
+  $query = "SELECT * FROM request ORDER BY anggaran ASC";
 } else if (isset($_POST['termahal'])) {
-  $list = "SELECT * FROM request ORDER BY anggaran DESC";
+  $query = "SELECT * FROM request ORDER BY anggaran DESC";
 }
 
-$result = mysqli_query($conn, $list);
+$result = mysqli_query($conn, $query);
 if ($result) {
+    $resultArray = array();
     while ($row = mysqli_fetch_array($result)) {
         $resultData = array();
         $resultData['id'] = $row['id'];
@@ -26,9 +28,9 @@ if ($result) {
         $resultArray['data'][] = $resultData;
     }
 
-    $resultArray['list_status'] = "success";
+    $resultArray['status'] = "success";
 } else {
-    $resultArray['list_status'] = "failed";
+    $resultArray['status'] = "failed";
 }
 
 echo json_encode($resultArray);

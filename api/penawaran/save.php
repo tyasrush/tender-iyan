@@ -1,12 +1,12 @@
 <?php
 
-include './koneksi.php';
+include '../koneksi.php';
 
 $target_path = 'images/penawaran/';
 $response = array();
 // $file_upload_url = "http://" . $_SERVER['SERVER_ADDR'] . '/tender/' . $target_path;
 // $file_upload_url = "http://" . $_SERVER['SERVER_ADDR'] . '/server_tender/' . $target_path;
-$file_upload_url = 'http://tender-server.esy.es/' . $target_path;
+$file_upload_url = 'https://ryan-tender.000webhostapp.com/' . $target_path;
 // $file_upload_url = "http://" . $_SERVER['SERVER_ADDR'] . $target_path;
 
 if (file_exists($target_path)) {
@@ -23,14 +23,19 @@ if (file_exists($target_path)) {
                 $name = $_POST['name'];
                 $deskripsi = $_POST['deskripsi'];
                 $harga = $_POST['harga'];
+                $lat = $_POST['lat'];
+                $lng = $_POST['lng'];
 
-                $addPenawaran = "INSERT INTO penawaran(id_user,id_request,nama,foto,deskripsi,harga) VALUES ("
+                $addPenawaran = "INSERT INTO penawaran(id_user,id_request,nama,foto,deskripsi,harga,lat,lng) VALUES ("
                         . "'" . $id_user . "',"
                         . "'" . $id_request . "',"
                         . "'" . $name . "',"
                         . "'" . $file_upload_url . basename($_FILES['image']['name']) . "',"
                         . "'" . $deskripsi . "',"
-                        . "" . $harga . ");";
+                        . "" . $harga . ","
+                        . "" . $lat . ","
+                        . "" . $lng . ""
+                        .");";
 
                 $result = mysqli_query($conn, $addPenawaran);
                 if ($result) {

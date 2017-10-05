@@ -1,15 +1,23 @@
 <?php
-//include koneksi untuk koneksi data ke database
-include './koneksi.php';
+
+include '../koneksi.php';
 
 $resultArray = array();
+$resultArray['data'][] = "";
 
-$id_request = $_POST['id_request'];
+$list = "SELECT * FROM penawaran WHERE id_request = " . $_POST['id_request'];
 
-$list = "SELECT * FROM penawaran WHERE id_request = " . $id_request;
+if (isset($_POST['alphabet'])) {
+  $list = $list . " ORDER BY nama ASC";
+} else if (isset($_POST['termurah'])) {
+  $list = $list . " ORDER BY harga ASC";
+} else if (isset($_POST['termahal'])) {
+  $list = $list . " ORDER BY harga DESC";
+}
 
 $result = mysqli_query($conn, $list);
 if ($result) {
+  $resultArray = array();
     while ($row = mysqli_fetch_array($result)) {
       $resultItem = array();
         $resultItem['id'] = $row['id'];
@@ -21,9 +29,9 @@ if ($result) {
         $resultArray['data'][] = $resultItem;
     }
 
-    $resultArray['list_status'] = "success";
+    $resultArray['status'] = "success";
 } else {
-    $resultArray['list_status'] = "failed";
+    $resultArray['status'] = "failed";
 }
 
 echo json_encode($resultArray);

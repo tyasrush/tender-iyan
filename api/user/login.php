@@ -1,8 +1,9 @@
 <?php
 
-include './koneksi.php';
+include '../koneksi.php';
 
 $resultArray = array();
+$resultArray['data'][] = "";
 
 if (isset($_POST['email']) && isset($_POST['password'])) {
     $email = $_POST['email'];
@@ -12,16 +13,19 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 
     $result = mysqli_query($conn, $login);
     if ($result && mysqli_num_rows($result) === 1) {
+        $resultArray = array();
         while ($row = mysqli_fetch_array($result)) {
-            $resultArray['id'] = $row['id'];
+            $resultData = array();
+            $resultData['id'] = $row['id'];
+            $resultArray['data'][] = $resultData;
         }
 
-        $resultArray['login_status'] = "success";
+        $resultArray['status'] = "success";
     } else {
-        $resultArray['login_status'] = "failed";
+        $resultArray['status'] = "failed";
     }
 } else {
-    $resultArray['login_status'] = "invalid";
+    $resultArray['status'] = "invalid";
 }
 
 echo json_encode($resultArray);

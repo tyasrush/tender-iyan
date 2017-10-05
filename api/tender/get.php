@@ -1,17 +1,15 @@
 <?php
-
-include './koneksi.php';
+//include koneksi untuk koneksi data ke database
+include '../koneksi.php';
 
 $resultArray = array();
+$resultArray['data'][] = "";
 
-if (isset($_POST['id'])) {
-    $list = "SELECT * FROM request WHERE id_user = " . $_POST['id'];
-} else {
-    $list = "SELECT * FROM request";
-}
+$list = "SELECT * FROM penawaran WHERE id_request = " . $_POST['id_request'];
 
 $result = mysqli_query($conn, $list);
 if ($result) {
+    $resultArray = array();
     while ($row = mysqli_fetch_array($result)) {
         $resultData = array();
         $resultData['id'] = $row['id'];
@@ -19,14 +17,13 @@ if ($result) {
         $resultData['nama'] = $row['nama'];
         $resultData['deskripsi'] = $row['deskripsi'];
         $resultData['foto'] = $row['foto'];
-        $resultData['anggaran'] = $row['anggaran'];
-        $resultData['waktu'] = $row['waktu'];
+        $resultData['harga'] = $row['harga'];
         $resultArray['data'][] = $resultData;
     }
 
-    $resultArray['list_status'] = "success";
+    $resultArray['status'] = "success";
 } else {
-    $resultArray['list_status'] = "failed";
+    $resultArray['status'] = "failed";
 }
 
 echo json_encode($resultArray);

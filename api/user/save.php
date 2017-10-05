@@ -1,8 +1,9 @@
 <?php
 
-include './koneksi.php';
+include '../koneksi.php';
 
 $resultArray = array();
+$resultArray['data'][] = "";
 
 $name = $_POST['name'];
 $email = $_POST['email'];
@@ -19,9 +20,9 @@ $signup = "INSERT INTO user(nama,email,password,contact,alamat) VALUES ("
 
 $result = mysqli_query($conn, $signup);
 if ($result) {
-    $resultArray['signup_status'] = "success";
+    $resultArray['status'] = "success";
 } else {
-    $resultArray['signup_status'] = "failed";
+    $resultArray['status'] = "failed";
 }
 
 echo json_encode($resultArray);
