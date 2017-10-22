@@ -2,20 +2,19 @@
 
 include '../koneksi.php';
 
-$target_path = 'images/penawaran/';
+$target_path = 'gambar/';
 $response = array();
-// $file_upload_url = "http://" . $_SERVER['SERVER_ADDR'] . '/tender/' . $target_path;
-// $file_upload_url = "http://" . $_SERVER['SERVER_ADDR'] . '/server_tender/' . $target_path;
-$file_upload_url = 'https://ryan-tender.000webhostapp.com/' . $target_path;
-// $file_upload_url = "http://" . $_SERVER['SERVER_ADDR'] . $target_path;
+// $host = "http://192.168.26.109/tender/api/penawaran/";
+$host = "https://ryan-tender.000webhostapp.com/api/penawaran/";
 
 if (file_exists($target_path)) {
     if (isset($_FILES['image']['name'])) {
         try {
-            $final_path = $target_path . basename($_FILES['image']['name']);
+            $filename = $_FILES["image"]["name"];
+            $file_basename = substr($filename, 0, strripos($filename, '.'));
+            $file_ext = substr($filename, strripos($filename, '.'));
+            $final_path = $target_path . md5($file_basename) . $file_ext;
             if (move_uploaded_file($_FILES['image']['tmp_name'], $final_path)) {
-                $response['file_name'] = basename($_FILES['image']['name']);
-                $response['message'] = $file_upload_url . basename($_FILES['image']['name']);
                 $response['error'] = false;
 
                 $id_user = $_POST['id_user'];
@@ -30,7 +29,7 @@ if (file_exists($target_path)) {
                         . "'" . $id_user . "',"
                         . "'" . $id_request . "',"
                         . "'" . $name . "',"
-                        . "'" . $file_upload_url . basename($_FILES['image']['name']) . "',"
+                        . "'" . $host . $final_path . "',"
                         . "'" . $deskripsi . "',"
                         . "" . $harga . ","
                         . "" . $lat . ","

@@ -1,3 +1,3 @@
 <?php
-echo "host pada pc ini : " . date("Y-m-d", strtotime("31/07/2016"));
+echo "host pada pc ini : " . $_SERVER['REMOTE_ADDR'];
  ?>

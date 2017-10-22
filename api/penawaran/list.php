@@ -26,6 +26,8 @@ if ($result) {
         $resultItem['deskripsi'] = $row['deskripsi'];
         $resultItem['foto'] = $row['foto'];
         $resultItem['harga'] = $row['harga'];
+        $resultItem['lat'] = $row['lat'];
+        $resultItem['lng'] = $row['lng'];
         $resultArray['data'][] = $resultItem;
     }
 

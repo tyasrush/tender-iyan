@@ -6,7 +6,7 @@ $resultArray = array();
 
 $param = $_POST['q'];
 
-$list = "SELECT * FROM request WHERE nama LIKE '%". $param ."%'";
+$list = "SELECT request.*, kategori.nama AS nama_kategori FROM request INNER JOIN kategori ON request.id_kategori = kategori.id WHERE request.nama LIKE '%". $param ."%'";
 
 $result = mysqli_query($conn, $list);
 if ($result) {
@@ -19,6 +19,8 @@ if ($result) {
     $resultData['foto'] = $row['foto'];
     $resultData['anggaran'] = $row['anggaran'];
     $resultData['waktu'] = $row['waktu'];
+    $resultData['kategori']['id'] = $row['id_kategori'];
+    $resultData['kategori']['nama'] = $row['nama_kategori'];
     $resultArray['data'][] = $resultData;
   }
 

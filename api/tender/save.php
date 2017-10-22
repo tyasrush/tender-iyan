@@ -2,33 +2,34 @@
 
 include '../koneksi.php';
 
-$target_path = 'images/request/';
+$target_path = 'gambar/';
 $response = array();
-// $file_upload_url = "http://" . $_SERVER['SERVER_ADDR'] . '/server_tender/' . $target_path;
-// $file_upload_url = "http://" . $_SERER['SERVER_ADDR'] . '/tender/' . $target_path;
-// $file_upload_url = "http://" . $_SERVER['SERVER_ADDR'] . $target_path;
-$file_upload_url = 'https://ryan-tender.000webhostapp.com/' . $target_path;
+// $host = "http://192.168.26.109/tender/api/tender/";
+$host = "https://ryan-tender.000webhostapp.com/api/tender/";
 
 if (file_exists($target_path)) {
     if (isset($_FILES['image']['name'])) {
         try {
-            $final_path = $target_path . basename($_FILES['image']['name']);
+            $filename = $_FILES["image"]["name"];
+            $file_basename = substr($filename, 0, strripos($filename, '.'));
+            $file_ext = substr($filename, strripos($filename, '.'));
+            $final_path = $target_path . md5($file_basename) . $file_ext;
             if (move_uploaded_file($_FILES['image']['tmp_name'], $final_path)) {
-                $response['file_name'] = basename($_FILES['image']['name']);
-                $response['message'] = $file_upload_url . basename($_FILES['image']['name']);
                 $response['error'] = false;
 
                 $id_user = $_POST['id_user'];
+                $id_kategori = $_POST['id_kategori'];
                 $name = $_POST['name'];
                 $deskripsi = $_POST['deskripsi'];
                 $anggaran = $_POST['anggaran'];
                 $waktu = $_POST['waktu'];
                 $date = date("Y-m-d", strtotime($waktu));
 
-                $addTender = "INSERT INTO request(nama,id_user,foto,deskripsi,anggaran,waktu) VALUES ("
+                $addTender = "INSERT INTO request(nama,id_user,id_kategori,foto,deskripsi,anggaran,waktu) VALUES ("
                         . "'" . $name . "',"
                         . "'" . $id_user . "',"
-                        . "'" . $file_upload_url . basename($_FILES['image']['name']) . "',"
+                        . "" . $id_kategori . ","
+                        . "'" . $host . $final_path . "',"
                         . "'" . $deskripsi . "',"
                         . "" . $anggaran . ","
                         . "'" . $date . "');";
@@ -40,19 +41,22 @@ if (file_exists($target_path)) {
                     $response['status'] = "failed";
                 }
             } else {
+                $response['status'] = "failed";
                 $response['error'] = true;
                 $response['message'] = 'Could not move the file!';
             }
         } catch (Exception $e) {
+            $response['status'] = "failed";
             $response['error'] = true;
             $response['message'] = $e->getMessage();
-            ;
         }
     } else {
+        $response['status'] = "failed";
         $response['error'] = true;
         $response['message'] = 'Could not move the file!';
     }
 } else {
+    $response['status'] = "failed";
     $response['error'] = true;
     $response['message'] = 'Dir not valid';
 }
