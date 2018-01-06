@@ -14,7 +14,7 @@ $alamat = $_POST['alamat'];
 $signup = "INSERT INTO user(nama,email,password,contact,alamat) VALUES ("
         . "'" . $name . "',"
         . "'" . $email . "',"
-        . "'" . $password . "',"
+        . "'" . md5($password) . "',"
         . "" . $kontak . ","
         . "'" . $alamat . "');";
 
