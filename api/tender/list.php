@@ -6,9 +6,13 @@ $resultArray = array();
 $resultArray['data'][] = "";
 
 if (isset($_GET['id'])) {
-    $query = "SELECT request.*, kategori.nama AS nama_kategori FROM request LEFT JOIN kategori ON request.id_kategori = kategori.id WHERE request.id_user = " . $_GET['id'];
+    $query = "SELECT request.*, kategori.nama AS nama_kategori FROM request ".
+    "LEFT JOIN kategori ON request.id_kategori = kategori.id ".
+    "WHERE request.id_user = " . $_GET['id'];
 } else {
-    $query = "SELECT request.*, kategori.nama AS nama_kategori FROM request LEFT JOIN kategori ON request.id_kategori = kategori.id";
+    $query = "SELECT request.*, kategori.nama AS nama_kategori FROM request ".
+    "LEFT JOIN kategori ON request.id_kategori = kategori.id ".
+    "WHERE deal = 0";
 }
 
 $result = mysqli_query($conn, $query);

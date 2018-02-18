@@ -1,11 +1,12 @@
-<?php
-
+<?php 
 include '../koneksi.php';
 
 $target_path = 'gambar/';
 $response = array();
-// $host = "http://192.168.26.109/tender/api/tender/";
+// $host = "http://192.168.26.107/tender/api/deal/";
 $host = "https://ryan-tender.000webhostapp.com/api/tender/";
+
+$id = $_POST['id'];
 
 if (file_exists($target_path)) {
     if (isset($_FILES['image']['name'])) {
@@ -17,30 +18,13 @@ if (file_exists($target_path)) {
             if (move_uploaded_file($_FILES['image']['tmp_name'], $final_path)) {
                 $response['error'] = false;
 
-                $id_user = $_POST['id_user'];
-                $id_kategori = $_POST['id_kategori'];
-                $name = $_POST['name'];
-                $deskripsi = $_POST['deskripsi'];
-                $anggaran = $_POST['anggaran'];
-                $waktu = $_POST['waktu'];
-                $date = date("Y-m-d", strtotime($waktu));
-
-                $addTender = "INSERT INTO request(nama,id_user,id_kategori,foto,deskripsi,anggaran,waktu) VALUES ("
-                        . "'" . $name . "',"
-                        . "'" . $id_user . "',"
-                        . "" . $id_kategori . ","
-                        . "'" . $host . $final_path . "',"
-                        . "'" . $deskripsi . "',"
-                        . "" . $anggaran . ","
-                        . "'" . $date . "');";
+                $addTender = "UPDATE deal SET bukti_transfer = '" . $host . $final_path . "' WHERE id = " . $id;
 
                 $result = mysqli_query($conn, $addTender);
                 if ($result) {
                     $response['status'] = "success";
-                    $response['message'] = 'Save successful';
                 } else {
                     $response['status'] = "failed";
-                    $response['message'] = mysqli_error($conn);
                 }
             } else {
                 $response['status'] = "failed";
@@ -64,4 +48,5 @@ if (file_exists($target_path)) {
 }
 
 echo json_encode($response);
+
 ?>
